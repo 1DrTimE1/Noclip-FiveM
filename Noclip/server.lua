@@ -1,4 +1,4 @@
-local webhookURL = ""
+local webhookURL = "YOUR_DISCORD_WEEBHOOK_HERE"
 
 function sendToDiscord(title, message, color)
     local embed = {
@@ -36,3 +36,4 @@ AddEventHandler("logNoclipStatus", function(enabled)
         ("Player: **%s**\nSteam: `%s`\nDiscord: %s"):format(src, steam, discord),
         color)
 end)
+
