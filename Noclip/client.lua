@@ -1,21 +1,20 @@
 local noclip = false
-local baseSpeed = 0.7
+local baseSpeed = 1.3
 
 RegisterCommand("noclip", function()
-    noclip = not noclip
+    TriggerServerEvent("requestNoclipToggle")
+end, false)
+
+RegisterNetEvent("noclipToggle")
+AddEventHandler("noclipToggle", function(enabled)
+    noclip = enabled
     local player = PlayerPedId()
+
     SetEntityInvincible(player, noclip)
-    SetEntityVisible(player, not noclip)
+    SetEntityVisible(player, not noclip, false)
     SetEntityCollision(player, not noclip, false)
-    FreezeEntityPosition(player, false)
+    FreezeEntityPosition(player, noclip)
 
-    TriggerServerEvent("logNoclipStatus", noclip)
-
-    if noclip then
-        print("✅ Noclip AKTIV")
-    else
-        print("🛑 Noclip DISABLE")
-    end
 end)
 
 Citizen.CreateThread(function()
@@ -28,7 +27,7 @@ Citizen.CreateThread(function()
             SetEntityCollision(player, false, false)
 
             local speed = baseSpeed
-            if IsControlPressed(0, 21) then
+            if IsControlPressed(0, 21) then -- SHIFT
                 speed = speed * 2.4
             end
 
@@ -46,6 +45,7 @@ Citizen.CreateThread(function()
                     coords.y + dirY * speed,
                     coords.z + dirZ * speed,
                     true, true, true)
+          
             elseif IsControlPressed(0, 33) then
                 SetEntityCoordsNoOffset(player,
                     coords.x - dirX * speed,
