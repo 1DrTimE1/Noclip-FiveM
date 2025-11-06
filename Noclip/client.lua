@@ -27,7 +27,7 @@ Citizen.CreateThread(function()
             SetEntityCollision(player, false, false)
 
             local speed = baseSpeed
-            if IsControlPressed(0, 21) then -- SHIFT
+            if IsControlPressed(0, 21) then 
                 speed = speed * 2.4
             end
 
@@ -59,3 +59,4 @@ Citizen.CreateThread(function()
         end
     end
 end)
+
